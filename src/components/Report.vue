@@ -16,7 +16,9 @@ export default {
   }, mounted: function() {
     //get username from the route
     let user = this.$route.params.id;
-    console.log(user)
+    axios.get("http://bounnce.herokuapp.com/data?user="+this.$route.params.id).then(function(response){
+      console.log(response.data[0])
+    })
   }
 
 };
