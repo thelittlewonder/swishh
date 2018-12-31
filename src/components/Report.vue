@@ -1,8 +1,9 @@
 <template>
   <div>
-      <h1>Analysis </h1>
+    <h1 v-if="exists==='true'">Exists</h1>
+    <h1 v-if="exists==='false'">Login</h1>
+    <h1 v-if="exists==='working'">Calculating</h1>
   </div>
-  
 </template>
 
 <script>
@@ -11,16 +12,21 @@ export default {
   name: "Report",
   data() {
     return {
-      
+      exists: 'working'
     };
-  }, mounted: function() {
+  },
+  mounted(){
     //get username from the route
     let user = this.$route.params.id;
-    axios.get("http://bounnce.herokuapp.com/data?user="+this.$route.params.id).then(function(response){
-      console.log(response.data[0])
-    })
+    let vm = this
+    axios
+      .get("http://bounnce.herokuapp.com/data?user=" + this.$route.params.id)
+      .then(function(response) {
+        response.data.length === 1
+          ? (vm.exists = 'true')
+          : (vm.exists = 'false');
+      });
   }
-
 };
 </script>
 
