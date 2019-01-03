@@ -48,14 +48,18 @@
         <h1>Your Favorite Tags</h1>
         <p v-for="tag in getTags" v-bind:key="tag">{{tag}}</p>
       </div>
+      <div class="sec">
+        <h1>You have a thing for Mondays</h1>
+      </div>
     </div>
-    <h1 v-if="exists==='false'">Login</h1>
-    <h1 v-if="exists==='working'">Calculating</h1>
+    <h1 v-else-if="exists==='false'">Login</h1>
+    <h1 v-else>Calculating</h1>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Chart from "chart.js";
 export default {
   name: "Report",
   data() {
@@ -165,7 +169,7 @@ export default {
         return b[1] - a[1];
       });
       sortable = sortable.slice(0, 5);
-      return Object.keys(this.objectify(sortable))
+      return Object.keys(this.objectify(sortable));
     }
   },
   methods: {

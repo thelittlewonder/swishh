@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 5 Copy 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-Copy" transform="translate(-642.000000, -271.000000)">
+            <g id="Group-2" transform="translate(642.000000, 271.000000)">
+                <g id="Group-7">
+                    <g id="Group-5-Copy-2">
+                        <circle id="Oval" fill-opacity="0.1" fill="#83A5FF" cx="16" cy="16" r="16"></circle>
+                        <g id="baseline-videocam-24px" transform="translate(8.000000, 8.000000)">
+                            <polygon id="Path" points="0 0 16 0 16 16 0 16"></polygon>
+                            <path d="M11.3333333,7 L11.3333333,4.66666667 C11.3333333,4.3 11.0333333,4 10.6666667,4 L2.66666667,4 C2.3,4 2,4.3 2,4.66666667 L2,11.3333333 C2,11.7 2.3,12 2.66666667,12 L10.6666667,12 C11.0333333,12 11.3333333,11.7 11.3333333,11.3333333 L11.3333333,9 L14,11.6666667 L14,4.33333333 L11.3333333,7 Z" id="Path" fill="#83A5FF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
