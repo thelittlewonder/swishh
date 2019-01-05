@@ -1,37 +1,43 @@
 <template>
   <div class="bg">
+    <router-link to="/" class="home">
+      <img src="../assets/swishhhllogo.svg">
+    </router-link>
     <div v-if="exists==='true'" class="report">
       <div class="sec">
         <h1>
           Here’s how 2018 went for you,
-          <a :href="profile.html_url">{{getName}}</a>
+          <a :href="profile.html_url" class="link">{{getName}}</a>
         </h1>
         <div class="stats">
           <div class="block">
             <div class="head">
-              <img src>
-              <h2>{{shots.length}}</h2>
+              <img src="../assets/shots.svg">
+              <h2 style="color:#FFB132">{{shots.length}}</h2>
             </div>
             <p>Total Shots Posted</p>
           </div>
           <div class="block">
             <div class="head">
-              <img src>
-              <h2>{{getAnimations}}</h2>
+              <img src="../assets/animations.svg">
+              <h2 style="color:#83A5FF">{{getAnimations}}</h2>
             </div>
             <p>Shots Animated</p>
           </div>
           <div class="block">
             <div class="head">
-              <img src>
-              <h2>{{projects.length}}</h2>
+              <img src="../assets/projects.svg">
+              <h2 style="color:#00D98E">{{projects.length}}</h2>
             </div>
             <p>New Projects Created</p>
           </div>
         </div>
       </div>
       <div class="sec" v-show="filteredTeams.length > 0">
-        <h1>You joined {{getTeams}}!</h1>
+        <h1>
+          You joined
+          <span style="color:#5AC531">{{getTeams}}!</span>
+        </h1>
         <div class="teams">
           <div class="team" v-for="t in filteredTeams" v-bind:key="t.id">
             <div class="teamdp">
@@ -45,11 +51,19 @@
         </div>
       </div>
       <div class="sec">
-        <h1>Your Favorite Tags</h1>
-        <p v-for="tag in getTags" v-bind:key="tag">{{tag}}</p>
+        <h1>
+          Your
+          <span style="color:#A867F9">Favorite</span> Tags
+        </h1>
+        <div class="tags">
+          <p v-for="tag in getTags" v-bind:key="tag" class="tag">{{tag}}</p>
+        </div>
       </div>
       <div class="sec">
-        <h1>You had a thing for {{maxDay}}</h1>
+        <h1>
+          You had a thing for
+          <span style="color:#FFB132">{{maxDay}}</span>
+        </h1>
         <div class="dayChartContainer">
           <div class="legend">
             <div class="dayblock"></div>
@@ -60,7 +74,9 @@
         {{renderDayChart}}
       </div>
       <div class="sec">
-        <h1>{{maxMonth}} saw a lot of pixels from you!</h1>
+        <h1>
+          <span style="color:#83A5FF">{{maxMonth}}</span> saw a lot of pixels from you!
+        </h1>
         <div class="monthChartContainer">
           <div class="legend">
             <div class="monthblock"></div>
@@ -71,7 +87,10 @@
         {{renderMonthChart}}
       </div>
       <div class="sec">
-        <h1>{{maxMessage}}</h1>
+        <h1>
+          You
+          <span style="color:#00D98E">{{maxMessage}}</span>
+        </h1>
         <div class="timeChartContainer">
           <div class="legend">
             <div class="timeblock"></div>
@@ -81,12 +100,15 @@
         </div>
         {{renderTimeChart}}
       </div>
-      <div class="shotstream">
-        {{getRandomShots}}
-        <div class="shotsingle" v-for="t in randomShots" v-bind:key="t.id">
-          <a :href="t.html_url">
-            <img :src="t.images.normal">
-          </a>
+      <div class="sec">
+        <h1>Cheers to 2018 🍻</h1>
+        <div class="stream">
+          {{getRandomShots}}
+          <div class="single" v-for="t in randomShots" v-bind:key="t.id">
+            <a :href="t.html_url" target="_blank">
+              <img :src="t.images.normal">
+            </a>
+          </div>
         </div>
       </div>
       <div class="share">
@@ -115,36 +137,179 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @font-face {
-  font-family: "hkgrotesk";
+  font-family: "HKGrotesk-Regular";
   src: url("../assets/hkgrotesk-regular-webfont.woff2") format("woff2"),
     url("../assets/hkgrotesk-regular-webfont.woff") format("woff");
   font-weight: normal;
 }
 @font-face {
-  font-family: "hkgrotesk";
+  font-family: "HKGrotesk-SemiBold";
   src: url("../assets/hkgrotesk-semibold-webfont.woff2") format("woff2"),
     url("../assets/hkgrotesk-semibold-webfont.woff") format("woff");
-  font-weight: bold;
+  font-weight: normal;
 }
 .bg {
   background-color: #fdfdfd;
   padding: 2em;
+  .home {
+    display: inline-block;
+    img {
+      height: 3em;
+    }
+  }
 }
 .report {
   max-width: 980px;
-  padding: 2em;
+  padding: 4em 2em;
   margin: 0 auto;
-  font-family: "hkgrotesk";
+  font-family: "HKGrotesk-Regular";
   background: #ffffff;
   border: 1px solid #eeeeee;
   box-shadow: 0 4px 20px 0 rgba(116, 116, 116, 0.05);
   h1 {
-    font-family: "hkgrotesk";
-    font-weight: bold;
-    font-size: 1.125em;
+    font-family: "HKGrotesk-SemiBold";
+    font-size: 1.3em;
     color: #1c2445;
     letter-spacing: 0;
     text-align: center;
+    margin-bottom: 2.5em;
+    .link {
+      color: #ea4c89;
+      text-decoration: none;
+    }
+  }
+  .sec {
+    margin-bottom: 8em;
+  }
+  .stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    .block {
+      display: flex;
+      flex-direction: column;
+      .head {
+        align-self: flex-start;
+        font-family: "HKGrotesk-Bold";
+        font-size: 2em;
+        display: flex;
+        flex-direction: row;
+        img {
+          margin-right: 0.25em;
+        }
+      }
+      p {
+        margin-top: 0.5em;
+        font-family: "HKGrotesk-Regular";
+        font-size: 1em;
+        color: #666666;
+      }
+    }
+  }
+  .teams {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    .team {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .teamdp {
+        margin-right: 0.5em;
+        img {
+          height: 3em;
+          border-radius: 50%;
+        }
+      }
+      .info {
+        h2 {
+          font-family: "HKGrotesk-Regular";
+          font-size: 1.3em;
+          color: #333333;
+        }
+        p {
+          font-family: "HKGrotesk-Regular";
+          font-size: 1em;
+          color: #666666;
+          margin-top: 0.5em;
+        }
+      }
+    }
+  }
+  .tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    .tag {
+      font-family: "HKGrotesk-Regular";
+      font-size: 1.125em;
+      color: #a867f9;
+      padding: 4px 10px 6px 10px;
+      background-color: rgba(168, 103, 249, 0.1);
+      border-radius: 4px;
+    }
+  }
+  .legend {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 3.5em;
+    .dayblock {
+      background: rgba(255, 177, 50, 0.7);
+      border: 1px solid #ffb132;
+      height: 16px;
+      width: 16px;
+      margin-right: 10px;
+    }
+    p {
+      font-family: "HKGrotesk-Regular";
+      font-size: 14px;
+      color: #666666;
+    }
+    .monthblock {
+      height: 16px;
+      width: 16px;
+      margin-right: 10px;
+      background: rgba(131, 165, 255, 0.7);
+      border: 1px solid #83a5ff;
+    }
+    .timeblock {
+      background-image: linear-gradient(-180deg, #00d98e 0%, #00d98e 100%);
+      border: 1px solid #00d98e;
+      height: 16px;
+      width: 16px;
+      margin-right: 10px;
+    }
+  }
+  .stream {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+    margin-bottom: 8em;
+    .single {
+      img {
+        height: 140px;
+        transition-property: all;
+        transition-timing-function: ease-in-out;
+        transition-duration: 0.25s;
+        &:hover {
+          box-shadow: 0 4px 8px 0 rgba(226, 226, 226, 0.5);
+          transform: scale(1.01);
+        }
+      }
+    }
+  }
+  .farewell {
+    margin: 6em 0 2em 0;
+    p {
+      font-family: "HKGrotesk-SemiBold";
+      font-size: 18px;
+      color: #1c2445;
+      line-height: 32px;
+      text-align: center;
+    }
   }
 }
 </style>
@@ -153,7 +318,7 @@
 import axios from "axios";
 import Chart from "chart.js";
 import "reset-css";
-Chart.defaults.global.defaultFontFamily = "hkgrotesk";
+Chart.defaults.global.defaultFontFamily = "HKGrotesk-Regular";
 export default {
   name: "Report",
   data() {
@@ -267,7 +432,7 @@ export default {
             return obj[b] - obj[a];
           })[0] + "s";
 
-let dayLabels = Object.keys(this.dayData).map(el => el.substr(0,3));
+        let dayLabels = Object.keys(this.dayData).map(el => el.substr(0, 3));
         let myChart = new Chart(ctx, {
           type: "bar",
           data: {
@@ -344,8 +509,9 @@ let dayLabels = Object.keys(this.dayData).map(el => el.substr(0,3));
           return obj[b] - obj[a];
         })[0];
 
-
-        let monthLabels = Object.keys(this.monthData).map(el => el.substr(0,3));
+        let monthLabels = Object.keys(this.monthData).map(el =>
+          el.substr(0, 3)
+        );
 
         let myChart = new Chart(ctx, {
           type: "bar",
@@ -427,22 +593,22 @@ let dayLabels = Object.keys(this.dayData).map(el => el.substr(0,3));
         })[0];
 
         if (this.maxTime >= 21 && this.maxTime < 23) {
-          this.maxMessage = "You were a night owl 🦉";
+          this.maxMessage = " were a night owl 🦉";
         }
         if (this.maxTime >= 0 && this.maxTime < 4) {
-          this.maxMessage = "You were a night owl 🦉";
+          this.maxMessage = " were a night owl 🦉";
         }
         if (this.maxTime >= 4 && this.maxTime < 10) {
-          this.maxMessage = "You were a early bird ☀️";
+          this.maxMessage = " were a early bird ☀️";
         }
         if (this.maxTime >= 9 && this.maxTime < 12) {
-          this.maxMessage = "You hustled during the day 🌞";
+          this.maxMessage = " hustled during the day 🌞";
         }
         if (this.maxTime >= 12 && this.maxTime < 16) {
-          this.maxMessage = "You hustled during the day 🌞";
+          this.maxMessage = " hustled during the day 🌞";
         }
         if (this.maxTime >= 16 && this.maxTime < 20) {
-          this.maxMessage = "Your evenings were memorable 🌆";
+          this.maxMessage = " dribbbled in the evening 🌆";
         }
         let timeLabels = Object.keys(this.timeData).map(el => {
           let h = parseInt(el);
