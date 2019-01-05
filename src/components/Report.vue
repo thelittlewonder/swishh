@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="exists==='true'">
+  <div class="bg">
+    <div v-if="exists==='true'" class="report">
       <div class="sec">
         <h1>
           Here’s how 2018 went for you,
@@ -49,7 +49,61 @@
         <p v-for="tag in getTags" v-bind:key="tag">{{tag}}</p>
       </div>
       <div class="sec">
-        <h1>You have a thing for Mondays</h1>
+        <h1>You had a thing for {{maxDay}}</h1>
+        <div class="dayChartContainer">
+          <div class="legend">
+            <div class="dayblock"></div>
+            <p>Number of Shots Posted per Day</p>
+          </div>
+          <canvas id="daychart"></canvas>
+        </div>
+        {{renderDayChart}}
+      </div>
+      <div class="sec">
+        <h1>{{maxMonth}} saw a lot of pixels from you!</h1>
+        <div class="monthChartContainer">
+          <div class="legend">
+            <div class="monthblock"></div>
+            <p>Number of Shots Posted per Month</p>
+          </div>
+          <canvas id="monthchart"></canvas>
+        </div>
+        {{renderMonthChart}}
+      </div>
+      <div class="sec">
+        <h1>{{maxMessage}}</h1>
+        <div class="timeChartContainer">
+          <div class="legend">
+            <div class="timeblock"></div>
+            <p>Number of Shots Posted per Time of the Day</p>
+          </div>
+          <canvas id="timechart"></canvas>
+        </div>
+        {{renderTimeChart}}
+      </div>
+      <div class="shotstream">
+        {{getRandomShots}}
+        <div class="shotsingle" v-for="t in randomShots" v-bind:key="t.id">
+          <a :href="t.html_url">
+            <img :src="t.images.normal">
+          </a>
+        </div>
+      </div>
+      <div class="share">
+        {{getBtn}}
+        <a
+          href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+          class="twitter-share-button"
+          data-size="large"
+          data-text="Checkout my Dribbble 2018 Report Card"
+          data-hashtags="swishhh"
+          data-related
+          data-show-count="false"
+        >Share on Twitter</a>
+      </div>
+      <div class="farewell">
+        <p>I can’t wait to see what you create in 2019.</p>
+        <p>Best wishes for the new year 😄</p>
       </div>
     </div>
     <h1 v-else-if="exists==='false'">Login</h1>
@@ -57,9 +111,49 @@
   </div>
 </template>
 
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+@font-face {
+  font-family: "hkgrotesk";
+  src: url("../assets/hkgrotesk-regular-webfont.woff2") format("woff2"),
+    url("../assets/hkgrotesk-regular-webfont.woff") format("woff");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "hkgrotesk";
+  src: url("../assets/hkgrotesk-semibold-webfont.woff2") format("woff2"),
+    url("../assets/hkgrotesk-semibold-webfont.woff") format("woff");
+  font-weight: bold;
+}
+.bg {
+  background-color: #fdfdfd;
+  padding: 2em;
+}
+.report {
+  max-width: 980px;
+  padding: 2em;
+  margin: 0 auto;
+  font-family: "hkgrotesk";
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 4px 20px 0 rgba(116, 116, 116, 0.05);
+  h1 {
+    font-family: "hkgrotesk";
+    font-weight: bold;
+    font-size: 1.125em;
+    color: #1c2445;
+    letter-spacing: 0;
+    text-align: center;
+  }
+}
+</style>
+
 <script>
 import axios from "axios";
 import Chart from "chart.js";
+import "reset-css";
+Chart.defaults.global.defaultFontFamily = "hkgrotesk";
 export default {
   name: "Report",
   data() {
@@ -77,6 +171,8 @@ export default {
         Saturday: 0,
         Sunday: 0
       },
+      maxDay: "",
+      maxMonth: "",
       filteredTeams: [],
       monthData: {
         January: 0,
@@ -92,7 +188,36 @@ export default {
         November: 0,
         December: 0
       },
-      tags: {}
+      timeData: {
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+        7: 0,
+        8: 0,
+        9: 0,
+        10: 0,
+        11: 0,
+        12: 0,
+        13: 0,
+        14: 0,
+        15: 0,
+        16: 0,
+        17: 0,
+        18: 0,
+        19: 0,
+        20: 0,
+        21: 0,
+        22: 0,
+        23: 0
+      },
+      maxTime: 0,
+      maxMessage: "",
+      tags: {},
+      randomShots: []
     };
   },
   mounted() {
@@ -112,11 +237,284 @@ export default {
       });
   },
   computed: {
-    getDayData: function() {
-      let obj = this.dayData;
-      this.shots.forEach(shot => {
-        let day = shot.dayName;
-        obj[day] += 1;
+    getBtn: function() {
+      let twitterScript = document.createElement("script");
+      twitterScript.setAttribute(
+        "src",
+        "https://platform.twitter.com/widgets.js"
+      );
+      document.head.appendChild(twitterScript);
+    },
+    getRandomShots: function() {
+      let shuffled = this.shots.sort(function() {
+        return 0.5 - Math.random();
+      });
+      this.randomShots = shuffled.slice(0, 5);
+    },
+    renderDayChart: function() {
+      this.$nextTick(() => {
+        let chart = document.getElementById("daychart");
+        let ctx = chart.getContext("2d");
+
+        //get daydata
+        let obj = this.dayData;
+        this.shots.forEach(shot => {
+          let day = shot.dayName;
+          obj[day] += 1;
+        });
+        this.maxDay =
+          Object.keys(obj).sort(function(a, b) {
+            return obj[b] - obj[a];
+          })[0] + "s";
+
+let dayLabels = Object.keys(this.dayData).map(el => el.substr(0,3));
+        let myChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: dayLabels,
+            datasets: [
+              {
+                data: Object.values(this.dayData),
+                backgroundColor: "rgba(255, 177, 50, 0.5)",
+                borderColor: "#FFB132",
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [
+                {
+                  gridLines: {
+                    display: false,
+                    color: "#FFB132"
+                  },
+                  barPercentage: 0.7
+                }
+              ],
+              yAxes: [
+                {
+                  gridLines: {
+                    display: false,
+                    color: "#FFB132"
+                  },
+                  ticks: {
+                    beginAtZero: true,
+                    stepSize: 1
+                  }
+                }
+              ]
+            },
+            tooltips: {
+              enabled: true,
+              mode: "single",
+              callbacks: {
+                label: function(tooltipItems, data) {
+                  return (
+                    " " +
+                    tooltipItems.yLabel +
+                    " shots uploaded on " +
+                    tooltipItems.xLabel +
+                    "."
+                  );
+                }
+              }
+            }
+          }
+        });
+      });
+    },
+    renderMonthChart: function() {
+      this.$nextTick(() => {
+        let chart = document.getElementById("monthchart");
+        let ctx = chart.getContext("2d");
+
+        //get monthdata
+
+        let obj = this.monthData;
+        this.shots.forEach(shot => {
+          let month = shot.monthName;
+          obj[month] += 1;
+        });
+        this.maxMonth = Object.keys(obj).sort(function(a, b) {
+          return obj[b] - obj[a];
+        })[0];
+
+
+        let monthLabels = Object.keys(this.monthData).map(el => el.substr(0,3));
+
+        let myChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: monthLabels,
+            datasets: [
+              {
+                data: Object.values(this.monthData),
+                backgroundColor: "rgba(131, 165, 255, 0.5)",
+                borderColor: "#83A5FF",
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [
+                {
+                  gridLines: {
+                    display: false,
+                    color: "#83A5FF"
+                  },
+                  barPercentage: 0.7
+                }
+              ],
+              yAxes: [
+                {
+                  gridLines: {
+                    display: false,
+                    color: "#83A5FF"
+                  },
+                  ticks: {
+                    beginAtZero: true,
+                    stepSize: 1
+                  }
+                }
+              ]
+            },
+            tooltips: {
+              enabled: true,
+              mode: "single",
+              callbacks: {
+                label: function(tooltipItems, data) {
+                  return (
+                    " " +
+                    tooltipItems.yLabel +
+                    " shots uploaded in " +
+                    tooltipItems.xLabel +
+                    "."
+                  );
+                }
+              }
+            }
+          }
+        });
+      });
+    },
+    renderTimeChart: function() {
+      this.$nextTick(() => {
+        let chart = document.getElementById("timechart");
+        let ctx = chart.getContext("2d");
+
+        //get daydata
+        let obj = this.timeData;
+        this.shots.forEach(shot => {
+          let time = new Date(shot.published_at);
+          let temp = time.toLocaleTimeString().split(":")[0];
+          if (temp.substr(0, 1) === "0") {
+            temp = temp.substr(1, 1);
+          }
+          obj[temp] += 1;
+        });
+        this.maxTime = Object.keys(obj).sort(function(a, b) {
+          return obj[b] - obj[a];
+        })[0];
+
+        if (this.maxTime >= 21 && this.maxTime < 23) {
+          this.maxMessage = "You were a night owl 🦉";
+        }
+        if (this.maxTime >= 0 && this.maxTime < 4) {
+          this.maxMessage = "You were a night owl 🦉";
+        }
+        if (this.maxTime >= 4 && this.maxTime < 10) {
+          this.maxMessage = "You were a early bird ☀️";
+        }
+        if (this.maxTime >= 9 && this.maxTime < 12) {
+          this.maxMessage = "You hustled during the day 🌞";
+        }
+        if (this.maxTime >= 12 && this.maxTime < 16) {
+          this.maxMessage = "You hustled during the day 🌞";
+        }
+        if (this.maxTime >= 16 && this.maxTime < 20) {
+          this.maxMessage = "Your evenings were memorable 🌆";
+        }
+        let timeLabels = Object.keys(this.timeData).map(el => {
+          let h = parseInt(el);
+          if (h >= 1 && h <= 11) {
+            el = h + " AM";
+          } else if (h === 12) {
+            el = h + " PM";
+          } else if ((h >= 13) & (h <= 23)) {
+            el = h - 12 + " PM";
+          } else if (h === 0) {
+            el = h + 12 + " AM";
+          }
+          return el;
+        });
+        let myChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: timeLabels,
+            datasets: [
+              {
+                data: Object.values(this.timeData),
+                backgroundColor: "rgba(0, 217, 132, 0.5)",
+                borderColor: "#00D98E",
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [
+                {
+                  gridLines: {
+                    display: false,
+                    color: "#00D98E"
+                  },
+                  barPercentage: 0.7
+                }
+              ],
+              yAxes: [
+                {
+                  gridLines: {
+                    display: false,
+                    color: "#00D98E"
+                  },
+                  ticks: {
+                    beginAtZero: true,
+                    stepSize: 1
+                  }
+                }
+              ]
+            },
+            tooltips: {
+              enabled: true,
+              mode: "single",
+              callbacks: {
+                label: function(tooltipItems, data) {
+                  return (
+                    " " +
+                    tooltipItems.yLabel +
+                    " shots uploaded at " +
+                    tooltipItems.xLabel +
+                    "."
+                  );
+                }
+              }
+            }
+          }
+        });
       });
     },
     getName: function() {
@@ -133,13 +531,6 @@ export default {
       let string;
       length === 1 ? (string = "team") : (string = "teams");
       return length + " new " + string;
-    },
-    getMonthData: function() {
-      let obj = this.monthData;
-      this.shots.forEach(shot => {
-        let month = shot.monthName;
-        obj[month] += 1;
-      });
     },
     getAnimations: function() {
       let animatedshots = [];
@@ -182,7 +573,3 @@ export default {
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
