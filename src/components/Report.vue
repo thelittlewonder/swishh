@@ -1,6 +1,6 @@
 <template>
   <div class="bg">
-    <vue-headful :title="pageTitle" :description="pageDescription" :url="shareUrl"/>
+    <vue-headful :title="pageTitle" :description="pageDescription"/>
     <div class="logo">
       <router-link to="/">
         <img src="../assets/swishhhllogo.svg">

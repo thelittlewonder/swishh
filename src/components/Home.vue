@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <vue-headful title="Swishhh - 2018 Dribbble Report Card" description="Visualise your year of Dribbbling"/>
     <div class="logo">
       <router-link to="/">
         <img src="../assets/swishhhllogo.svg" alt="Swishhh">
