@@ -1,7 +1,7 @@
 # Swishhh
 ![banner](https://i.imgur.com/rOmIIcs.png)
 
-Built using Vue.js and Dribbble v2 API
+Built using [Vue.js](http://vuejs.org) and [Dribbble API](https://developer.dribbble.com/v2/)
 
 ## Building Locally
 
