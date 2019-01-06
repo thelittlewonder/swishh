@@ -1,141 +1,188 @@
 <template>
   <div class="bg">
-    <router-link to="/" class="home">
-      <img src="../assets/swishhhllogo.svg">
-    </router-link>
-    <div v-if="exists==='true'" class="report">
-      <div class="sec">
-        <h1>
-          Here’s how 2018 went for you,
-          <a :href="profile.html_url" class="link">{{getName}}</a>
-        </h1>
-        <div class="stats">
-          <div class="block">
-            <div class="head">
-              <img src="../assets/shots.svg">
-              <h2 style="color:#FFB132">{{shots.length}}</h2>
+    <div class="logo">
+      <router-link to="/">
+        <img src="../assets/swishhhllogo.svg">
+      </router-link>
+    </div>
+    <transition name="fade">
+      <div v-if="exists==='true'" class="report">
+        <div class="sec">
+          <h1>
+            Here’s how 2018 went for you,
+            <a :href="profile.html_url" class="link">{{getName}}</a>
+          </h1>
+          <div class="stats">
+            <div class="block">
+              <div class="head">
+                <img src="../assets/shots.svg">
+                <h2 style="color:#FFB132">{{shots.length}}</h2>
+              </div>
+              <p>Total Shots Posted</p>
             </div>
-            <p>Total Shots Posted</p>
-          </div>
-          <div class="block">
-            <div class="head">
-              <img src="../assets/animations.svg">
-              <h2 style="color:#83A5FF">{{getAnimations}}</h2>
+            <div class="block">
+              <div class="head">
+                <img src="../assets/animations.svg">
+                <h2 style="color:#83A5FF">{{getAnimations}}</h2>
+              </div>
+              <p>Shots Animated</p>
             </div>
-            <p>Shots Animated</p>
-          </div>
-          <div class="block">
-            <div class="head">
-              <img src="../assets/projects.svg">
-              <h2 style="color:#00D98E">{{projects.length}}</h2>
-            </div>
-            <p>New Projects Created</p>
-          </div>
-        </div>
-      </div>
-      <div class="sec" v-show="filteredTeams.length > 0">
-        <h1>
-          You joined
-          <span style="color:#5AC531">{{getTeams}}!</span>
-        </h1>
-        <div class="teams">
-          <div class="team" v-for="t in filteredTeams" v-bind:key="t.id">
-            <div class="teamdp">
-              <img :src="t.avatar_url">
-            </div>
-            <div class="info">
-              <h2>{{t.name}}</h2>
-              <p>{{t.location}}</p>
+            <div class="block">
+              <div class="head">
+                <img src="../assets/projects.svg">
+                <h2 style="color:#00D98E">{{projects.length}}</h2>
+              </div>
+              <p>New Projects Created</p>
             </div>
           </div>
         </div>
-      </div>
-      <div class="sec">
-        <h1>
-          Your
-          <span style="color:#A867F9">Favorite</span> Tags
-        </h1>
-        <div class="tags">
-          <p v-for="tag in getTags" v-bind:key="tag" class="tag">{{tag}}</p>
-        </div>
-      </div>
-      <div class="sec">
-        <h1>
-          You had a thing for
-          <span style="color:#FFB132">{{maxDay}}</span>
-        </h1>
-        <div class="dayChartContainer">
-          <div class="legend">
-            <div class="dayblock"></div>
-            <p>Number of Shots Posted per Day</p>
+        <div class="sec" v-show="filteredTeams.length > 0">
+          <h1>
+            You joined
+            <span style="color:#5AC531">{{getTeams}}</span>
+          </h1>
+          <div class="teams">
+            <div class="team" v-for="t in filteredTeams" v-bind:key="t.id">
+              <div class="teamdp">
+                <img :src="t.avatar_url">
+              </div>
+              <div class="info">
+                <h2>{{t.name}}</h2>
+                <p>{{t.location}}</p>
+              </div>
+            </div>
           </div>
-          <canvas id="daychart"></canvas>
         </div>
-        {{renderDayChart}}
-      </div>
-      <div class="sec">
-        <h1>
-          <span style="color:#83A5FF">{{maxMonth}}</span> saw a lot of pixels from you!
-        </h1>
-        <div class="monthChartContainer">
-          <div class="legend">
-            <div class="monthblock"></div>
-            <p>Number of Shots Posted per Month</p>
+        <div class="sec">
+          <h1>
+            Your
+            <span style="color:#A867F9">Favorite</span> Tags
+          </h1>
+          <div class="tags">
+            <a
+              v-for="tag in getTags"
+              v-bind:key="tag"
+              :href="'https://dribbble.com/'+ profile.login +'/tags/' + tag"
+              class="tag"
+            >{{tag}}</a>
           </div>
-          <canvas id="monthchart"></canvas>
         </div>
-        {{renderMonthChart}}
-      </div>
-      <div class="sec">
-        <h1>
-          You
-          <span style="color:#00D98E">{{maxMessage}}</span>
-        </h1>
-        <div class="timeChartContainer">
-          <div class="legend">
-            <div class="timeblock"></div>
-            <p>Number of Shots Posted per Time of the Day</p>
+        <div class="sec">
+          <h1>
+            You had a thing for
+            <span style="color:#FFB132">{{maxDay}}</span>
+          </h1>
+          <div class="dayChartContainer">
+            <div class="legend-container">
+              <div class="legend">
+                <div class="dayblock"></div>
+                <span>Number of Shots Posted per Day</span>
+              </div>
+            </div>
+            <canvas id="daychart"></canvas>
           </div>
-          <canvas id="timechart"></canvas>
+          {{renderDayChart}}
         </div>
-        {{renderTimeChart}}
-      </div>
-      <div class="sec">
-        <h1>Cheers to 2018 🍻</h1>
-        <div class="stream">
-          {{getRandomShots}}
-          <div class="single" v-for="t in randomShots" v-bind:key="t.id">
-            <a :href="t.html_url" target="_blank">
-              <img :src="t.images.normal">
+        <div class="sec">
+          <h1>
+            <span style="color:#83A5FF">{{maxMonth}}</span> saw a lot of pixels from you!
+          </h1>
+          <div class="monthChartContainer">
+            <div class="legend-container">
+              <div class="legend">
+                <div class="monthblock"></div>
+                <span>Number of Shots Posted per Month</span>
+              </div>
+            </div>
+            <canvas id="monthchart"></canvas>
+          </div>
+          {{renderMonthChart}}
+        </div>
+        <div class="sec">
+          <h1>
+            You
+            <span style="color:#00D98E">{{maxMessage}}</span>
+          </h1>
+          <div class="timeChartContainer">
+            <div class="legend-container">
+              <div class="legend">
+                <div class="timeblock"></div>
+                <span>Number of Shots Posted per Time of the Day</span>
+              </div>
+            </div>
+            <canvas id="timechart"></canvas>
+          </div>
+          {{renderTimeChart}}
+        </div>
+        <div class="sec">
+          <h1 style="color:#F765B8;font-size:2em">Cheers to 2018.</h1>
+          <div class="stream">
+            {{getRandomShots}}
+            <div class="single" v-for="t in randomShots" v-bind:key="t.id">
+              <a :href="t.html_url" target="_blank">
+                <img :src="t.images.normal">
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="sharebtn">
+          <div class="share">
+            {{getBtn}}
+            <a :href="shareUrl" target="_blank">
+              <img src="../assets/twitter.svg">Share on Twitter
             </a>
           </div>
         </div>
+        <div class="divider"></div>
+        <div class="farewell">
+          <div class="message">
+            <p>I can’t wait to see what you create in 2019.</p>
+            <p>Best wishes for the new year ✨</p>
+          </div>
+          <div class="footer">
+            <div>
+              <span>
+                Put Together by
+                <a href="https://twitter.com/lilwonderspeaks">Abhishek /</a>
+              </span>
+              <span>
+                <img src="../assets/github.svg"> Source Code
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="share">
-        {{getBtn}}
-        <a
-          href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-          class="twitter-share-button"
-          data-size="large"
-          data-text="Checkout my Dribbble 2018 Report Card"
-          data-hashtags="swishhh"
-          data-related
-          data-show-count="false"
-        >Share on Twitter</a>
+    </transition>
+    <transition name="fade">
+      <div v-if="exists==='false'">
+        <h1>Loading</h1>
       </div>
-      <div class="farewell">
-        <p>I can’t wait to see what you create in 2019.</p>
-        <p>Best wishes for the new year 😄</p>
+    </transition>
+    <transition name="fade">
+      <div v-if="exists==='working'">
+        <loader></loader>
       </div>
-    </div>
-    <h1 v-else-if="exists==='false'">Login</h1>
-    <h1 v-else>Calculating</h1>
+    </transition>
   </div>
 </template>
 
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.25s;
+}
+
+.fade-enter-active {
+  transition-delay: 0.25s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
 @font-face {
   font-family: "HKGrotesk-Regular";
   src: url("../assets/hkgrotesk-regular-webfont.woff2") format("woff2"),
@@ -148,48 +195,53 @@
     url("../assets/hkgrotesk-semibold-webfont.woff") format("woff");
   font-weight: normal;
 }
+@font-face {
+  font-family: "Prata";
+  src: url("../assets/prata-regular-webfont.woff2") format("woff2"),
+    url("../assets/prata-regular-webfont.woff") format("woff");
+  font-weight: normal;
+}
 .bg {
   background-color: #fdfdfd;
-  padding: 2em;
-  .home {
-    display: inline-block;
-    img {
-      height: 3em;
+  padding: 1.5em;
+  .logo {
+    text-align: center;
+    a {
+      display: inline-block;
+      padding: 1.5em 0;
+      img {
+        height: 3em;
+      }
     }
   }
 }
 .report {
   max-width: 980px;
-  padding: 4em 2em;
   margin: 0 auto;
   font-family: "HKGrotesk-Regular";
   background: #ffffff;
   border: 1px solid #eeeeee;
   box-shadow: 0 4px 20px 0 rgba(116, 116, 116, 0.05);
   h1 {
-    font-family: "HKGrotesk-SemiBold";
-    font-size: 1.3em;
+    font-family: "Prata";
+    font-size: 1.5em;
     color: #1c2445;
-    letter-spacing: 0;
+    line-height: 1.75em;
+    letter-spacing: -0.3px;
     text-align: center;
-    margin-bottom: 2.5em;
+    margin-bottom: 2em;
     .link {
       color: #ea4c89;
       text-decoration: none;
     }
   }
-  .sec {
-    margin-bottom: 8em;
-  }
   .stats {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
     .block {
       display: flex;
       flex-direction: column;
       .head {
-        align-self: flex-start;
+        align-self: center;
         font-family: "HKGrotesk-Bold";
         font-size: 2em;
         display: flex;
@@ -208,13 +260,10 @@
   }
   .teams {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
     .team {
       display: flex;
       flex-direction: row;
       align-items: center;
-
       .teamdp {
         margin-right: 0.5em;
         img {
@@ -241,8 +290,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     .tag {
+      text-decoration: none;
       font-family: "HKGrotesk-Regular";
       font-size: 1.125em;
       color: #a867f9;
@@ -251,10 +301,16 @@
       border-radius: 4px;
     }
   }
+  .legend-container {
+    text-align: center;
+  }
   .legend {
-    display: flex;
-    flex-direction: row;
+    display: inline-block;
     margin-bottom: 3.5em;
+    div {
+      display: inline-block;
+      vertical-align: middle;
+    }
     .dayblock {
       background: rgba(255, 177, 50, 0.7);
       border: 1px solid #ffb132;
@@ -262,7 +318,7 @@
       width: 16px;
       margin-right: 10px;
     }
-    p {
+    span {
       font-family: "HKGrotesk-Regular";
       font-size: 14px;
       color: #666666;
@@ -282,34 +338,159 @@
       margin-right: 10px;
     }
   }
+
   .stream {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    overflow: hidden;
-    margin-bottom: 8em;
     .single {
       img {
-        height: 140px;
-        transition-property: all;
-        transition-timing-function: ease-in-out;
-        transition-duration: 0.25s;
-        &:hover {
-          box-shadow: 0 4px 8px 0 rgba(226, 226, 226, 0.5);
-          transform: scale(1.01);
+        border-radius: 2px;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+      }
+    }
+  }
+  .divider {
+    height: 2px;
+    width: 100px;
+    background-color: #00d98e;
+    text-align: center;
+  }
+  .farewell {
+    .message {
+      p {
+        font-family: "Prata";
+        font-size: 20px;
+        color: #1c2445;
+        line-height: 36px;
+        text-align: center;
+      }
+    }
+    .footer {
+      margin-top: 3em;
+      font-family: "HKGrotesk-Regular";
+      font-size: 16px;
+      color: #999999;
+      letter-spacing: 0;
+      text-align: center;
+      span {
+        img {
+          margin-left: 8px;
+          vertical-align: bottom;
+        }
+        a {
+          text-decoration: none;
+          color: inherit;
+          display: inline-block;
+          transition-property: all;
+          transition-duration: 0.25s;
+          transition-timing-function: ease-in-out;
+          &:hover {
+            color: #1da1f2;
+          }
         }
       }
     }
   }
-  .farewell {
-    margin: 6em 0 2em 0;
-    p {
-      font-family: "HKGrotesk-SemiBold";
-      font-size: 18px;
-      color: #1c2445;
-      line-height: 32px;
-      text-align: center;
+  .sharebtn {
+    text-align: center;
+    .share {
+      background: #1da1f2;
+      border-radius: 2px;
+      margin: 0 auto;
+      display: inline-block;
+      padding: 1em 0em;
+      img {
+        vertical-align: middle;
+        margin-right: 8px;
+      }
+      a {
+        text-align: center;
+        font-family: "HKGrotesk-Regular";
+        font-size: 18px;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 1em;
+      }
     }
+  }
+}
+@media screen and (min-width: 980px) {
+  .stats,
+  .teams {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .report {
+    padding: 4em 2em;
+  }
+
+  .sec {
+    margin-bottom: 8em;
+    &:last-child {
+      margin-bottom: 4em;
+    }
+  }
+  .tags {
+    .tag {
+      margin: 0 1em;
+    }
+  }
+  .stream {
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+    .single {
+      img {
+        height: 140px;
+      }
+    }
+  }
+  .divider {
+    margin: 6em auto 3em auto;
+  }
+}
+@media screen and (max-width: 979px) {
+  .stats,
+  .teams,
+  .stream {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .block {
+      margin-bottom: 3em;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .footer {
+    span {
+      display: block;
+      margin-bottom: 1em;
+    }
+  }
+  .report {
+    padding: 1em;
+  }
+  .divider {
+    margin: 3em auto;
+  }
+  .tags {
+    .tag {
+      margin: 0.5em;
+    }
+  }
+  .stream {
+    .single {
+      img {
+        margin-bottom: 1em;
+        width: 100%;
+      }
+    }
+  }
+
+  .sec {
+    margin-bottom: 5em;
   }
 }
 </style>
@@ -317,10 +498,12 @@
 <script>
 import axios from "axios";
 import Chart from "chart.js";
+import loader from "./Loader.vue"
 import "reset-css";
 Chart.defaults.global.defaultFontFamily = "HKGrotesk-Regular";
 export default {
   name: "Report",
+  components: {loader},
   data() {
     return {
       exists: "working",
@@ -382,7 +565,8 @@ export default {
       maxTime: 0,
       maxMessage: "",
       tags: {},
-      randomShots: []
+      randomShots: [],
+      shareUrl: ""
     };
   },
   mounted() {
@@ -403,12 +587,16 @@ export default {
   },
   computed: {
     getBtn: function() {
-      let twitterScript = document.createElement("script");
-      twitterScript.setAttribute(
-        "src",
-        "https://platform.twitter.com/widgets.js"
-      );
-      document.head.appendChild(twitterScript);
+      let text =
+        "In 2018, I posted " +
+        this.shots.length +
+        " shots on Dribbble. " +
+        "Checkout my Dribbble Report Card! #swishhh";
+      this.shareUrl =
+        "https://twitter.com/intent/tweet?url=" +
+        window.location.href +
+        "&text=" +
+        text;
     },
     getRandomShots: function() {
       let shuffled = this.shots.sort(function() {
