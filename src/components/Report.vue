@@ -652,7 +652,7 @@ export default {
       tags: {},
       randomShots: [],
       shareUrl: "",
-      pageTitle: this.profile.name + ' : Dribbble Year in Review',
+      pageTitle: window.location.href.split('/')[3] + ' : Dribbble Year in Review',
       pageDescription: "My 2018 Dribbble Report Card",
       client_id:
         "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73"
