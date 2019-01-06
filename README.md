@@ -1,6 +1,7 @@
-# swishh
+# Swishhh
+![banner](https://i.imgur.com/rOmIIcs.png)
 
-> A Vue.js project
+Built using Vue.js and Dribbble v2 API
 
 ## Build Setup
 
@@ -13,9 +14,3 @@ npm run dev
 
 # build for production with minification
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
