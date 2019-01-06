@@ -145,9 +145,9 @@
                 Put Together by
                 <a href="https://twitter.com/lilwonderspeaks">Abhishek /</a>
               </span>
-              <span>
+              <a href="https://github.com/littlewonder/swishh">
                 <img src="../assets/github.svg"> Source Code
-              </span>
+              </a>
             </div>
           </div>
         </div>
@@ -410,21 +410,20 @@
       color: #999999;
       letter-spacing: 0;
       text-align: center;
-      span {
-        img {
-          margin-left: 8px;
-          vertical-align: bottom;
-        }
-        a {
-          text-decoration: none;
-          color: inherit;
-          display: inline-block;
-          transition-property: all;
-          transition-duration: 0.25s;
-          transition-timing-function: ease-in-out;
-          &:hover {
-            color: #1da1f2;
-          }
+
+      img {
+        margin-left: 8px;
+        vertical-align: bottom;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+        display: inline-block;
+        transition-property: all;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-in-out;
+        &:hover {
+          color: #1da1f2;
         }
       }
     }
