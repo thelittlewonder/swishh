@@ -40,10 +40,14 @@ export default {
     const titleEl2 = document.querySelector(
       'head meta[property="twitter:description"]'
     );
+    const descEl3 = document.querySelector('head meta[name="description"]');
+    const titleEl3 = document.querySelector("head title");
     descEl.setAttribute("content", "Swishhh - 2018 Dribbble Report Card");
     titleEl.setAttribute("content", "Visualise your year of Dribbbling");
     descEl2.setAttribute("content", "Swishhh - 2018 Dribbble Report Card");
     titleEl2.setAttribute("content", "Visualise your year of Dribbbling");
+    descEl3.setAttribute("content", "Swishhh - 2018 Dribbble Report Card");
+    titleEl3.textContent = "Swishhh - 2018 Dribbble Report Card";
   },
   methods: {
     auth: function() {

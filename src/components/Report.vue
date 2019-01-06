@@ -681,6 +681,11 @@ export default {
           const titleEl2 = document.querySelector(
             'head meta[property="twitter:description"]'
           );
+
+          const descEl3 = document.querySelector(
+            'head meta[name="description"]'
+          );
+          const titleEl3 = document.querySelector("head title");
           let desc =
             "In 2018, I posted " +
             vm.shots.length +
@@ -696,6 +701,8 @@ export default {
             "content",
             vm.profile.name + " : Dribbble Report Card"
           );
+          descEl3.setAttribute("content", desc);
+          titleEl3.textContent = vm.profile.name + " : Dribbble Report Card";
         }
       });
   },
