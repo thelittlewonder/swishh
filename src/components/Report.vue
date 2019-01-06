@@ -681,17 +681,11 @@ export default {
           const titleEl2 = document.querySelector(
             'head meta[property="twitter:description"]'
           );
-
-          const desc = document.querySelector('head meta[name="title"]');
-          const title = document.querySelector('head meta[name="description"]');
           let desc =
             "In 2018, I posted " +
             vm.shots.length +
             " shots on Dribbble. " +
             "Checkout my Dribbble Report Card!";
-          desc.setAttribute("content", desc);
-          title.setAttribute("content",
-            vm.profile.name + " : Dribbble Report Card");
           descEl.setAttribute("content", desc);
           titleEl.setAttribute(
             "content",
