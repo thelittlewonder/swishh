@@ -6,7 +6,7 @@
       </router-link>
     </div>
     <transition name="fade">
-      <div v-if="exists==='true'" class="report">
+      <div v-if="exists==='true'&&shots.length>1" class="report">
         <div class="sec">
           <h1>
             Here’s how 2018 went for you,
@@ -154,13 +154,25 @@
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="exists==='false'">
-        <h1>Loading</h1>
+      <div v-if="exists==='false'" class="noexists">
+        <img src="../assets/404.svg">
+        <h1>Report Card does not exist.</h1>
+        <p>If you’re {{getQuery}}, please login to view your report card.</p>
+        <button @click="auth">
+          <img src="../assets/dribbble.svg">Login with Dribbble
+        </button>
       </div>
     </transition>
     <transition name="fade">
       <div v-if="exists==='working'">
         <loader></loader>
+      </div>
+    </transition>
+    <transition name="fade">
+      <div v-if="exists==='true'&&shots.length<=1" class="noshots">
+        <img src="../assets/noshots.svg">
+        <h1>Work In Progress?</h1>
+        <p>Seems like you did not upload enough shots in 2018. No worries, happens to best of us :)</p>
       </div>
     </transition>
   </div>
@@ -169,6 +181,33 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.noshots {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #ffffff;
+  display: flex;
+  padding: 2em;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 4px 20px 0 rgba(116, 116, 116, 0.05);
+  h1 {
+    font-family: "Prata";
+    font-size: 32px;
+    color: #1d88e5;
+    letter-spacing: -0.67px;
+    text-align: center;
+  }
+  p {
+    font-family: "HKGrotesk-Regular";
+    font-size: 18px;
+    color: #666666;
+    line-height: 1.25em;
+    letter-spacing: 0;
+    text-align: center;
+    margin: 1em 0 2em 0;
+  }
+}
 .fade-enter-active,
 .fade-leave-active {
   transition-property: opacity;
@@ -493,17 +532,63 @@
     margin-bottom: 5em;
   }
 }
+.noexists {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #ffffff;
+  display: flex;
+  padding: 2em;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 4px 20px 0 rgba(116, 116, 116, 0.05);
+  h1 {
+    font-family: "Prata";
+    font-size: 32px;
+    color: #00796b;
+    letter-spacing: -0.67px;
+    text-align: center;
+  }
+  p {
+    font-family: "HKGrotesk-Regular";
+    font-size: 18px;
+    color: #666666;
+    letter-spacing: 0;
+    text-align: center;
+    margin: 1em 0 2em 0;
+  }
+  button {
+    background: #f765b8;
+    cursor: pointer;
+    align-self: center;
+    font-family: "HKGrotesk-Regular";
+    font-size: 1.25em;
+    padding: 0.5em 1em;
+    color: #ffffff;
+    line-height: 1.25em;
+    border: none;
+    text-align: center;
+    border-radius: 2px;
+    &:focus {
+      outline: none;
+    }
+    img {
+      margin-right: 0.5em;
+      vertical-align: bottom;
+    }
+  }
+}
 </style>
 
 <script>
 import axios from "axios";
 import Chart from "chart.js";
-import loader from "./Loader.vue"
+import loader from "./Loader.vue";
 import "reset-css";
 Chart.defaults.global.defaultFontFamily = "HKGrotesk-Regular";
 export default {
   name: "Report",
-  components: {loader},
+  components: { loader },
   data() {
     return {
       exists: "working",
@@ -566,7 +651,9 @@ export default {
       maxMessage: "",
       tags: {},
       randomShots: [],
-      shareUrl: ""
+      shareUrl: "",
+      client_id:
+        "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73"
     };
   },
   mounted() {
@@ -586,6 +673,9 @@ export default {
       });
   },
   computed: {
+    getQuery: function() {
+      return window.location.href.split("/")[3];
+    },
     getBtn: function() {
       let text =
         "In 2018, I posted " +
@@ -923,6 +1013,12 @@ export default {
         result[currentArray[0]] = currentArray[1];
         return result;
       }, {});
+    },
+
+    auth: function() {
+      //open auth window
+      window.location.href =
+        "https://dribbble.com/oauth/authorize?" + "client_id=" + this.client_id;
     }
   }
 };
