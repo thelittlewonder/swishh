@@ -26,7 +26,7 @@
                 <img src="../assets/animations.svg">
                 <h2 style="color:#83A5FF">{{getAnimations}}</h2>
               </div>
-              <p>Shots Animated</p>
+              <p>Animated Shots</p>
             </div>
             <div class="block">
               <div class="head">
