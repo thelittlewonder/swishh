@@ -19,7 +19,7 @@ export default {
     //get context
     let vm = this;
     axios
-      .get("http://bounnce.herokuapp.com?code="+this.dribbble_code)
+      .get("https://bounnce.herokuapp.com?code="+this.dribbble_code)
       .then(function(response) {
         vm.$router.push("/" + response.data);
       });
