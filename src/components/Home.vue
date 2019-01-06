@@ -29,26 +29,6 @@ export default {
         "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73"
     };
   },
-  mounted() {
-    const descEl = document.querySelector('head meta[property="og:title"]');
-    const titleEl = document.querySelector(
-      'head meta[property="og:description"]'
-    );
-    const descEl2 = document.querySelector(
-      'head meta[property="twitter:title"]'
-    );
-    const titleEl2 = document.querySelector(
-      'head meta[property="twitter:description"]'
-    );
-    const descEl3 = document.querySelector('head meta[name="description"]');
-    const titleEl3 = document.querySelector("head title");
-    descEl.setAttribute("content", "Swishhh - 2018 Dribbble Report Card");
-    titleEl.setAttribute("content", "Visualise your year of Dribbbling");
-    descEl2.setAttribute("content", "Swishhh - 2018 Dribbble Report Card");
-    titleEl2.setAttribute("content", "Visualise your year of Dribbbling");
-    descEl3.setAttribute("content", "Swishhh - 2018 Dribbble Report Card");
-    titleEl3.textContent = "Swishhh - 2018 Dribbble Report Card";
-  },
   methods: {
     auth: function() {
       //open auth window

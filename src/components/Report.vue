@@ -1,5 +1,6 @@
 <template>
   <div class="bg">
+    <vue-headful :title="pageTitle" :description="pageDescription" :url="shareUrl"/>
     <div class="logo">
       <router-link to="/">
         <img src="../assets/swishhhllogo.svg">
@@ -651,6 +652,8 @@ export default {
       tags: {},
       randomShots: [],
       shareUrl: "",
+      pageTitle: "",
+      pageDescription: "",
       client_id:
         "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73"
     };
@@ -668,42 +671,8 @@ export default {
         vm.profile = response.data[0].profile;
         vm.shots = response.data[0].shots;
         vm.projects = response.data[0].projects;
-        if (vm.exists === "true") {
-          const descEl = document.querySelector(
-            'head meta[property="og:title"]'
-          );
-          const titleEl = document.querySelector(
-            'head meta[property="og:description"]'
-          );
-          const descEl2 = document.querySelector(
-            'head meta[property="twitter:title"]'
-          );
-          const titleEl2 = document.querySelector(
-            'head meta[property="twitter:description"]'
-          );
-
-          const descEl3 = document.querySelector(
-            'head meta[name="description"]'
-          );
-          const titleEl3 = document.querySelector("head title");
-          let desc =
-            "In 2018, I posted " +
-            vm.shots.length +
-            " shots on Dribbble. " +
-            "Checkout my Dribbble Report Card!";
-          descEl.setAttribute("content", desc);
-          titleEl.setAttribute(
-            "content",
-            vm.profile.name + " : Dribbble Report Card"
-          );
-          descEl2.setAttribute("content", desc);
-          titleEl2.setAttribute(
-            "content",
-            vm.profile.name + " : Dribbble Report Card"
-          );
-          descEl3.setAttribute("content", desc);
-          titleEl3.textContent = vm.profile.name + " : Dribbble Report Card";
-        }
+        vm.pageTitle = vm.profile.name + " : Dribbble Report Card";
+        vm.pageDescription = "In 2018, I posted " + vm.shots.length + " shots on Dribbble. ";
       });
   },
   computed: {

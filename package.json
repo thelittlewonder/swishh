@@ -17,6 +17,7 @@
     "reset-css": "^4.0.1",
     "vue": "^2.5.2",
     "vue-analytics": "^5.16.1",
+    "vue-headful": "^2.0.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
