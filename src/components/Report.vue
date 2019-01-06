@@ -670,12 +670,22 @@ export default {
         vm.projects = response.data[0].projects;
         if (vm.exists === "true") {
           const descEl = document.querySelector(
-            'head meta[name="description"]'
+            'head meta[property="og:title"]'
           );
-          const titleEl = document.querySelector("head title");
+          const titleEl = document.querySelector(
+            'head meta[property="og:description"]'
+          );
+                    const descEl2 = document.querySelector(
+            'head meta[property="twitter:title"]'
+          );
+          const titleEl2 = document.querySelector(
+            'head meta[property="twitter:description"]'
+          );
           let desc ="In 2018, I posted " + vm.shots.length + " shots on Dribbble. " +"Checkout my Dribbble Report Card!";
           descEl.setAttribute("content", desc);
-          titleEl.textContent = vm.profile.name + " Dribbble Report Card";
+          titleEl.setAttribute("content", vm.profile.name + " : Dribbble Report Card");
+          descEl2.setAttribute("content", desc);
+          titleEl2.setAttribute("content", vm.profile.name + " : Dribbble Report Card");
         }
       });
   },

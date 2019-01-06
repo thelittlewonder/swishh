@@ -29,6 +29,22 @@ export default {
         "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73"
     };
   },
+  mounted() {
+    const descEl = document.querySelector('head meta[property="og:title"]');
+    const titleEl = document.querySelector(
+      'head meta[property="og:description"]'
+    );
+    const descEl2 = document.querySelector(
+      'head meta[property="twitter:title"]'
+    );
+    const titleEl2 = document.querySelector(
+      'head meta[property="twitter:description"]'
+    );
+    descEl.setAttribute("content", "Swishhh - 2018 Dribbble Report Card");
+    titleEl.setAttribute("Visualise your year of Dribbbling");
+    descEl2.setAttribute("content", "Swishhh - 2018 Dribbble Report Card");
+    titleEl2.setAttribute("Visualise your year of Dribbbling");
+  },
   methods: {
     auth: function() {
       //open auth window
@@ -41,17 +57,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition-property: opacity;
-  transition-duration: .25s;
+  transition-duration: 0.25s;
 }
 
 .fade-enter-active {
-  transition-delay: .25s;
+  transition-delay: 0.25s;
 }
 
-.fade-enter, .fade-leave-active {
-  opacity: 0
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 @font-face {
   font-family: "HKGrotesk-Regular";
@@ -89,10 +107,10 @@ export default {
       font-size: 1.25em;
       color: #ffffff;
       line-height: 1.25em;
-      border:none;
+      border: none;
       text-align: center;
       border-radius: 2px;
-      &:focus{
+      &:focus {
         outline: none;
       }
       img {
@@ -104,7 +122,6 @@ export default {
 }
 
 @media screen and (min-width: 980px) {
-
   .logo {
     display: inline-block;
     img {
@@ -115,7 +132,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    .content{
+    .content {
       max-width: 550px;
     }
     .banner {
@@ -138,7 +155,6 @@ export default {
   }
 }
 @media screen and (max-width: 979px) {
-
   .logo {
     text-align: center;
     img {
