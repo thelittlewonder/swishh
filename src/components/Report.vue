@@ -668,7 +668,15 @@ export default {
         vm.profile = response.data[0].profile;
         vm.shots = response.data[0].shots;
         vm.projects = response.data[0].projects;
-        console.log(response.data);
+        if (vm.exists === "true") {
+          const descEl = document.querySelector(
+            'head meta[name="description"]'
+          );
+          const titleEl = document.querySelector("head title");
+          let desc ="In 2018, I posted " + vm.shots.length + " shots on Dribbble. " +"Checkout my Dribbble Report Card!";
+          descEl.setAttribute("content", desc);
+          titleEl.textContent = vm.profile.name + " Dribbble Report Card";
+        }
       });
   },
   computed: {
