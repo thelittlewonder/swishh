@@ -652,8 +652,8 @@ export default {
       tags: {},
       randomShots: [],
       shareUrl: "",
-      pageTitle: "",
-      pageDescription: "",
+      pageTitle: profile.name + ' : Dribbble Year in Review',
+      pageDescription: "My 2018 Dribbble Report Card",
       client_id:
         "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73"
     };
@@ -671,8 +671,6 @@ export default {
         vm.profile = response.data[0].profile;
         vm.shots = response.data[0].shots;
         vm.projects = response.data[0].projects;
-        vm.pageTitle = vm.profile.name + " : Dribbble Report Card";
-        vm.pageDescription = "In 2018, I posted " + vm.shots.length + " shots on Dribbble. ";
       });
   },
   computed: {
