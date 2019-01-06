@@ -3,7 +3,7 @@
 
 Built using Vue.js and Dribbble v2 API
 
-## Build Setup
+## Building Locally
 
 ``` bash
 # install dependencies
