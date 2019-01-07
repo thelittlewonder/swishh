@@ -475,7 +475,7 @@
   }
   .stream {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     overflow: hidden;
     .single {
       img {
