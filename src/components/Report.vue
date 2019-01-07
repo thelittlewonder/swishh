@@ -282,7 +282,7 @@
       flex-direction: column;
       .head {
         align-self: center;
-        font-family: "HKGrotesk-Bold";
+        font-family: "HKGrotesk-SemiBold";
         font-size: 2em;
         display: flex;
         flex-direction: row;
