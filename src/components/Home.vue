@@ -8,7 +8,7 @@
     </div>
     <div class="header">
       <div class="content">
-        <h1>Visualise your year of Dribbling</h1>
+        <h1>Visualise your year of Dribbbling</h1>
         <h2>2018 Year in Review Report Card for your Dribbble Profile</h2>
         <button @click="auth">
           <img src="../assets/dribbble.svg">Analyse My Dribbble Profile
