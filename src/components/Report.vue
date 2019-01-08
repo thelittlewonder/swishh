@@ -282,7 +282,7 @@
       flex-direction: column;
       .head {
         align-self: center;
-        font-family: "HKGrotesk-Bold";
+        font-family: "HKGrotesk-SemiBold";
         font-size: 2em;
         display: flex;
         flex-direction: row;
@@ -475,7 +475,7 @@
   }
   .stream {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     overflow: hidden;
     .single {
       img {
