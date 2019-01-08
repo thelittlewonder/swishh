@@ -878,7 +878,7 @@ export default {
           this.maxMessage = " were a night owl 🦉";
         }
         if (this.maxTime >= 4 && this.maxTime < 10) {
-          this.maxMessage = " were a early bird ☀️";
+          this.maxMessage = " were an early bird ☀️";
         }
         if (this.maxTime >= 9 && this.maxTime < 12) {
           this.maxMessage = " hustled during the day 🌞";
