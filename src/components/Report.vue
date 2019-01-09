@@ -871,15 +871,13 @@ export default {
           return obj[b] - obj[a];
         })[0];
 
-        console.log(this.maxTime);
-
-        if (this.maxTime >= 21 && this.maxTime < 23) {
+        if (this.maxTime >= 20 && this.maxTime <= 23) {
           this.maxMessage = " were a night owl 🦉";
         }
         if (this.maxTime >= 0 && this.maxTime < 4) {
           this.maxMessage = " were a night owl 🦉";
         }
-        if (this.maxTime >= 4 && this.maxTime < 10) {
+        if (this.maxTime >= 4 && this.maxTime < 9) {
           this.maxMessage = " were an early bird ☀️";
         }
         if (this.maxTime >= 9 && this.maxTime < 12) {
