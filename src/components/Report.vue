@@ -871,6 +871,8 @@ export default {
           return obj[b] - obj[a];
         })[0];
 
+        console.log(this.maxTime);
+
         if (this.maxTime >= 21 && this.maxTime < 23) {
           this.maxMessage = " were a night owl 🦉";
         }
