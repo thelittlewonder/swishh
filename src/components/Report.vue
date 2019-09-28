@@ -146,7 +146,7 @@
                 Put Together by
                 <a href="https://twitter.com/lilwonderspeaks">Abhishek /</a>
               </span>
-              <a href="https://github.com/littlewonder/swishh">
+              <a href="https://github.com/thelittlewonder/swishh">
                 <img src="../assets/github.svg"> Source Code
               </a>
             </div>
