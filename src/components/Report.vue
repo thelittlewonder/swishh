@@ -10,7 +10,7 @@
       <div v-if="exists==='true'&&shots.length>1" class="report">
         <div class="sec">
           <h1>
-            Here’s how 2018 went for you,
+            Here’s how 2019 went for you,
             <a :href="profile.html_url" class="link">{{getName}}</a>
           </h1>
           <div class="stats">
@@ -116,7 +116,7 @@
           {{renderTimeChart}}
         </div>
         <div class="sec">
-          <h1 style="color:#F765B8;font-size:2em">Cheers to 2018.</h1>
+          <h1 style="color:#F765B8;font-size:2em">Cheers to 2019.</h1>
           <div class="stream">
             {{getRandomShots}}
             <div class="single" v-for="t in randomShots" v-bind:key="t.id">
@@ -173,7 +173,7 @@
       <div v-if="exists==='true'&&shots.length<=1" class="noshots">
         <img src="../assets/noshots.svg">
         <h1>Work In Progress?</h1>
-        <p>Seems like you did not upload enough shots in 2018. No worries, happens to best of us :)</p>
+        <p>Seems like you did not upload enough shots in 2019. No worries, happens to best of us :)</p>
       </div>
     </transition>
   </div>
@@ -653,7 +653,7 @@ export default {
       randomShots: [],
       shareUrl: "",
       pageTitle: window.location.href.split('/')[3] + ' : Dribbble Year in Review',
-      pageDescription: "My 2018 Dribbble Report Card",
+      pageDescription: "My 2019 Dribbble Report Card",
       client_id:
         "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73"
     };
@@ -679,7 +679,7 @@ export default {
     },
     getBtn: function() {
       let text =
-        "In 2018, I posted " +
+        "In 2019, I posted " +
         this.shots.length +
         " shots on Dribbble. " +
         "Checkout my Dribbble Report Card! #swishhh";
@@ -968,7 +968,7 @@ export default {
     getTeams: function() {
       this.profile.teams.forEach(element => {
         let d = new Date(element.created_at);
-        if (d.getFullYear() === 2018) {
+        if (d.getFullYear() === 2019) {
           this.filteredTeams.push(element);
         }
       });
