@@ -137,7 +137,7 @@
         <div class="divider"></div>
         <div class="farewell">
           <div class="message">
-            <p>I can’t wait to see what you create in 2019.</p>
+            <p>I can’t wait to see what you create in 2020.</p>
             <p>Best wishes for the new year ✨</p>
           </div>
           <div class="footer">
