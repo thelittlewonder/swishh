@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <vue-headful title="Swishhh - 2019 Dribbble Report Card" description="Visualise your year of Dribbbling"/>
+    <vue-headful title="Swishhh - 2020 Dribbble Report Card" description="Visualise your year of Dribbbling"/>
     <div class="logo">
       <router-link to="/">
         <img src="../assets/swishhhllogo.svg" alt="Swishhh">
@@ -9,7 +9,7 @@
     <div class="header">
       <div class="content">
         <h1>Visualise your year of Dribbbling</h1>
-        <h2>2019 Year in Review Report Card for your Dribbble Profile</h2>
+        <h2>2020 Year in Review Report Card for your Dribbble Profile</h2>
         <button @click="auth">
           <img src="../assets/dribbble.svg">Analyse My Dribbble Profile
         </button>
