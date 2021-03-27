@@ -1,19 +1,16 @@
-# swishhhv2
+# Swishhh
+![banner](https://i.imgur.com/rOmIIcs.png)
 
-## Project setup
-```
-yarn install
-```
+Built using [Vue.js](http://vuejs.org) and [Dribbble API](https://developer.dribbble.com/v2/)
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## Building Locally
 
-### Compiles and minifies for production
-```
-yarn build
-```
+``` bash
+# install dependencies
+npm install
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
