@@ -1,21 +1,26 @@
 <template>
   <div class="home">
-    <vue-headful title="Swishhh - 2020 Dribbble Report Card" description="Visualise your year of Dribbbling"/>
+    <vue-headful
+      title="Swishhh - Annual Dribbble Report Card"
+      description="Visualise your year of Dribbbling"
+    />
     <div class="logo">
       <router-link to="/">
-        <img src="../assets/swishhhllogo.svg" alt="Swishhh">
+        <img src="../assets/swishhhllogo.svg" alt="Swishhh" />
       </router-link>
     </div>
     <div class="header">
       <div class="content">
         <h1>Visualise your year of Dribbbling</h1>
-        <h2>2020 Year in Review Report Card for your Dribbble Profile</h2>
+        <h2>
+          {{ getLastYear }} Year in Review Report Card for your Dribbble Profile
+        </h2>
         <button @click="auth">
-          <img src="../assets/dribbble.svg">Analyse My Dribbble Profile
+          <img src="../assets/dribbble.svg" />Analyse My Dribbble Profile
         </button>
       </div>
       <div class="banner">
-        <img class="bannerimg">
+        <img class="bannerimg" />
       </div>
     </div>
   </div>
@@ -27,16 +32,21 @@ export default {
   data() {
     return {
       client_id:
-        "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73"
+        "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73",
     };
   },
+  computed: {
+    getLastYear: function () {
+      return new Date().getFullYear() - 1;
+    },
+  },
   methods: {
-    auth: function() {
+    auth: function () {
       //open auth window
       window.location.href =
         "https://dribbble.com/oauth/authorize?" + "client_id=" + this.client_id;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,37 +1,37 @@
 <template>
   <div class="bg">
-    <vue-headful :title="pageTitle" :description="pageDescription"/>
+    <vue-headful :title="pageTitle" :description="pageDescription" />
     <div class="logo">
       <router-link to="/">
-        <img src="../assets/swishhhllogo.svg">
+        <img src="../assets/swishhhllogo.svg" />
       </router-link>
     </div>
     <transition name="fade">
-      <div v-if="exists==='true'&&shots.length>1" class="report">
+      <div v-if="exists === 'true' && shots.length > 1" class="report">
         <div class="sec">
           <h1>
-            Here’s how 2020 went for you,
-            <a :href="profile.html_url" class="link">{{getName}}</a>
+            Here’s how {{getLastYear}} went for you,
+            <a :href="profile.html_url" class="link">{{ getName }}</a>
           </h1>
           <div class="stats">
             <div class="block">
               <div class="head">
-                <img src="../assets/shots.svg">
-                <h2 style="color:#FFB132">{{shots.length}}</h2>
+                <img src="../assets/shots.svg" />
+                <h2 style="color: #ffb132">{{ shots.length }}</h2>
               </div>
               <p>Total Shots Posted</p>
             </div>
             <div class="block">
               <div class="head">
-                <img src="../assets/animations.svg">
-                <h2 style="color:#83A5FF">{{getAnimations}}</h2>
+                <img src="../assets/animations.svg" />
+                <h2 style="color: #83a5ff">{{ getAnimations }}</h2>
               </div>
               <p>Animated Shots</p>
             </div>
             <div class="block">
               <div class="head">
-                <img src="../assets/projects.svg">
-                <h2 style="color:#00D98E">{{projects.length}}</h2>
+                <img src="../assets/projects.svg" />
+                <h2 style="color: #00d98e">{{ projects.length }}</h2>
               </div>
               <p>New Projects Created</p>
             </div>
@@ -40,16 +40,16 @@
         <div class="sec" v-show="filteredTeams.length > 0">
           <h1>
             You joined
-            <span style="color:#5AC531">{{getTeams}}</span>
+            <span style="color: #5ac531">{{ getTeams }}</span>
           </h1>
           <div class="teams">
             <div class="team" v-for="t in filteredTeams" v-bind:key="t.id">
               <div class="teamdp">
-                <img :src="t.avatar_url">
+                <img :src="t.avatar_url" />
               </div>
               <div class="info">
-                <h2>{{t.name}}</h2>
-                <p>{{t.location}}</p>
+                <h2>{{ t.name }}</h2>
+                <p>{{ t.location }}</p>
               </div>
             </div>
           </div>
@@ -57,21 +57,22 @@
         <div class="sec">
           <h1>
             Your
-            <span style="color:#A867F9">Favorite</span> Tags
+            <span style="color: #a867f9">Favorite</span> Tags
           </h1>
           <div class="tags">
             <a
               v-for="tag in getTags"
               v-bind:key="tag"
-              :href="'https://dribbble.com/'+ profile.login +'/tags/' + tag"
+              :href="'https://dribbble.com/' + profile.login + '/tags/' + tag"
               class="tag"
-            >{{tag}}</a>
+              >{{ tag }}</a
+            >
           </div>
         </div>
         <div class="sec">
           <h1>
             You had a thing for
-            <span style="color:#FFB132">{{maxDay}}</span>
+            <span style="color: #ffb132">{{ maxDay }}</span>
           </h1>
           <div class="dayChartContainer">
             <div class="legend-container">
@@ -82,11 +83,12 @@
             </div>
             <canvas id="daychart"></canvas>
           </div>
-          {{renderDayChart}}
+          {{ renderDayChart }}
         </div>
         <div class="sec">
           <h1>
-            <span style="color:#83A5FF">{{maxMonth}}</span> saw the maximum pixels from you!
+            <span style="color: #83a5ff">{{ maxMonth }}</span> saw the maximum
+            pixels from you!
           </h1>
           <div class="monthChartContainer">
             <div class="legend-container">
@@ -97,12 +99,12 @@
             </div>
             <canvas id="monthchart"></canvas>
           </div>
-          {{renderMonthChart}}
+          {{ renderMonthChart }}
         </div>
         <div class="sec">
           <h1>
             You
-            <span style="color:#00D98E">{{maxMessage}}</span>
+            <span style="color: #00d98e">{{ maxMessage }}</span>
           </h1>
           <div class="timeChartContainer">
             <div class="legend-container">
@@ -113,31 +115,31 @@
             </div>
             <canvas id="timechart"></canvas>
           </div>
-          {{renderTimeChart}}
+          {{ renderTimeChart }}
         </div>
         <div class="sec">
-          <h1 style="color:#F765B8;font-size:2em">Cheers to 2020.</h1>
+          <h1 style="color: #f765b8; font-size: 2em">Cheers to {{getLastYear}}.</h1>
           <div class="stream">
-            {{getRandomShots}}
+            {{ getRandomShots }}
             <div class="single" v-for="t in randomShots" v-bind:key="t.id">
               <a :href="t.html_url" target="_blank">
-                <img :src="t.images.normal">
+                <img :src="t.images.normal" />
               </a>
             </div>
           </div>
         </div>
         <div class="sharebtn">
           <div class="share">
-            {{getBtn}}
+            {{ getBtn }}
             <a :href="shareUrl" target="_blank">
-              <img src="../assets/twitter.svg">Share on Twitter
+              <img src="../assets/twitter.svg" />Share on Twitter
             </a>
           </div>
         </div>
         <div class="divider"></div>
         <div class="farewell">
           <div class="message">
-            <p>I can’t wait to see what you create in 2021.</p>
+            <p>I can’t wait to see what you create in {{getCurrYear}}.</p>
             <p>Best wishes for the new year ✨</p>
           </div>
           <div class="footer">
@@ -147,7 +149,7 @@
                 <a href="https://twitter.com/lilwonderspeaks">Abhishek /</a>
               </span>
               <a href="https://github.com/thelittlewonder/swishh">
-                <img src="../assets/github.svg"> Source Code
+                <img src="../assets/github.svg" /> Source Code
               </a>
             </div>
           </div>
@@ -155,25 +157,28 @@
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="exists==='false'" class="noexists">
-        <img src="../assets/404.svg">
+      <div v-if="exists === 'false'" class="noexists">
+        <img src="../assets/404.svg" />
         <h1>Report Card does not exist.</h1>
-        <p>If you’re {{getQuery}}, please login to view your report card.</p>
+        <p>If you’re {{ getQuery }}, please login to view your report card.</p>
         <button @click="auth">
-          <img src="../assets/dribbble.svg">Login with Dribbble
+          <img src="../assets/dribbble.svg" />Login with Dribbble
         </button>
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="exists==='working'">
+      <div v-if="exists === 'working'">
         <loader></loader>
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="exists==='true'&&shots.length<=1" class="noshots">
-        <img src="../assets/noshots.svg">
+      <div v-if="exists === 'true' && shots.length <= 1" class="noshots">
+        <img src="../assets/noshots.svg" />
         <h1>Work In Progress?</h1>
-        <p>Seems like you did not upload enough shots in 2020. No worries, happens to best of us :)</p>
+        <p>
+          Seems like you did not upload enough shots in {{getLastYear}}. No worries,
+          happens to best of us :)
+        </p>
       </div>
     </transition>
   </div>
@@ -602,7 +607,7 @@ export default {
         Thursday: 0,
         Friday: 0,
         Saturday: 0,
-        Sunday: 0
+        Sunday: 0,
       },
       maxDay: "",
       maxMonth: "",
@@ -619,7 +624,7 @@ export default {
         September: 0,
         October: 0,
         November: 0,
-        December: 0
+        December: 0,
       },
       timeData: {
         0: 0,
@@ -645,17 +650,18 @@ export default {
         20: 0,
         21: 0,
         22: 0,
-        23: 0
+        23: 0,
       },
       maxTime: 0,
       maxMessage: "",
       tags: {},
       randomShots: [],
       shareUrl: "",
-      pageTitle: window.location.href.split('/')[3] + ' : Dribbble Year in Review',
-      pageDescription: "My 2020 Dribbble Report Card",
+      pageTitle:
+        window.location.href.split("/")[3] + " : Dribbble Year in Review",
+      pageDescription: "My Annual Dribbble Report Card",
       client_id:
-        "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73"
+        "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73",
     };
   },
   mounted() {
@@ -663,8 +669,10 @@ export default {
     let user = this.$route.params.id;
     let vm = this;
     axios
-      .get("https://bounnce-api.herokuapp.com/data?user=" + this.$route.params.id)
-      .then(function(response) {
+      .get(
+        "https://bounnce-api.herokuapp.com/data?user=" + this.$route.params.id
+      )
+      .then(function (response) {
         response.data.length === 1
           ? (vm.exists = "true")
           : (vm.exists = "false");
@@ -674,12 +682,18 @@ export default {
       });
   },
   computed: {
-    getQuery: function() {
+    getQuery: function () {
       return window.location.href.split("/")[3];
     },
-    getBtn: function() {
+    getLastYear: function () {
+      return new Date().getFullYear() - 1;
+    },
+    getCurrYear: function () {
+      return new Date().getFullYear();
+    },
+    getBtn: function () {
       let text =
-        "In 2020, I posted " +
+        "In "+this.getLastYear+", I posted " +
         this.shots.length +
         " shots on Dribbble. " +
         "Checkout my Dribbble Report Card! #swishhh";
@@ -689,29 +703,29 @@ export default {
         "&text=" +
         text;
     },
-    getRandomShots: function() {
-      let shuffled = this.shots.sort(function() {
+    getRandomShots: function () {
+      let shuffled = this.shots.sort(function () {
         return 0.5 - Math.random();
       });
       this.randomShots = shuffled.slice(0, 5);
     },
-    renderDayChart: function() {
+    renderDayChart: function () {
       this.$nextTick(() => {
         let chart = document.getElementById("daychart");
         let ctx = chart.getContext("2d");
 
         //get daydata
         let obj = this.dayData;
-        this.shots.forEach(shot => {
+        this.shots.forEach((shot) => {
           let day = shot.dayName;
           obj[day] += 1;
         });
         this.maxDay =
-          Object.keys(obj).sort(function(a, b) {
+          Object.keys(obj).sort(function (a, b) {
             return obj[b] - obj[a];
           })[0] + "s";
 
-        let dayLabels = Object.keys(this.dayData).map(el => el.substr(0, 3));
+        let dayLabels = Object.keys(this.dayData).map((el) => el.substr(0, 3));
         let myChart = new Chart(ctx, {
           type: "bar",
           data: {
@@ -721,43 +735,43 @@ export default {
                 data: Object.values(this.dayData),
                 backgroundColor: "rgba(255, 177, 50, 0.5)",
                 borderColor: "#FFB132",
-                borderWidth: 1
-              }
-            ]
+                borderWidth: 1,
+              },
+            ],
           },
           options: {
             responsive: true,
             legend: {
-              display: false
+              display: false,
             },
             scales: {
               xAxes: [
                 {
                   gridLines: {
                     display: false,
-                    color: "#FFB132"
+                    color: "#FFB132",
                   },
-                  barPercentage: 0.7
-                }
+                  barPercentage: 0.7,
+                },
               ],
               yAxes: [
                 {
                   gridLines: {
                     display: false,
-                    color: "#FFB132"
+                    color: "#FFB132",
                   },
                   ticks: {
                     beginAtZero: true,
-                    stepSize: 1
-                  }
-                }
-              ]
+                    stepSize: 1,
+                  },
+                },
+              ],
             },
             tooltips: {
               enabled: true,
               mode: "single",
               callbacks: {
-                label: function(tooltipItems, data) {
+                label: function (tooltipItems, data) {
                   return (
                     " " +
                     tooltipItems.yLabel +
@@ -765,14 +779,14 @@ export default {
                     tooltipItems.xLabel +
                     "."
                   );
-                }
-              }
-            }
-          }
+                },
+              },
+            },
+          },
         });
       });
     },
-    renderMonthChart: function() {
+    renderMonthChart: function () {
       this.$nextTick(() => {
         let chart = document.getElementById("monthchart");
         let ctx = chart.getContext("2d");
@@ -780,15 +794,15 @@ export default {
         //get monthdata
 
         let obj = this.monthData;
-        this.shots.forEach(shot => {
+        this.shots.forEach((shot) => {
           let month = shot.monthName;
           obj[month] += 1;
         });
-        this.maxMonth = Object.keys(obj).sort(function(a, b) {
+        this.maxMonth = Object.keys(obj).sort(function (a, b) {
           return obj[b] - obj[a];
         })[0];
 
-        let monthLabels = Object.keys(this.monthData).map(el =>
+        let monthLabels = Object.keys(this.monthData).map((el) =>
           el.substr(0, 3)
         );
 
@@ -801,43 +815,43 @@ export default {
                 data: Object.values(this.monthData),
                 backgroundColor: "rgba(131, 165, 255, 0.5)",
                 borderColor: "#83A5FF",
-                borderWidth: 1
-              }
-            ]
+                borderWidth: 1,
+              },
+            ],
           },
           options: {
             responsive: true,
             legend: {
-              display: false
+              display: false,
             },
             scales: {
               xAxes: [
                 {
                   gridLines: {
                     display: false,
-                    color: "#83A5FF"
+                    color: "#83A5FF",
                   },
-                  barPercentage: 0.7
-                }
+                  barPercentage: 0.7,
+                },
               ],
               yAxes: [
                 {
                   gridLines: {
                     display: false,
-                    color: "#83A5FF"
+                    color: "#83A5FF",
                   },
                   ticks: {
                     beginAtZero: true,
-                    stepSize: 1
-                  }
-                }
-              ]
+                    stepSize: 1,
+                  },
+                },
+              ],
             },
             tooltips: {
               enabled: true,
               mode: "single",
               callbacks: {
-                label: function(tooltipItems, data) {
+                label: function (tooltipItems, data) {
                   return (
                     " " +
                     tooltipItems.yLabel +
@@ -845,21 +859,21 @@ export default {
                     tooltipItems.xLabel +
                     "."
                   );
-                }
-              }
-            }
-          }
+                },
+              },
+            },
+          },
         });
       });
     },
-    renderTimeChart: function() {
+    renderTimeChart: function () {
       this.$nextTick(() => {
         let chart = document.getElementById("timechart");
         let ctx = chart.getContext("2d");
 
         //get daydata
         let obj = this.timeData;
-        this.shots.forEach(shot => {
+        this.shots.forEach((shot) => {
           let time = new Date(shot.published_at);
           let temp = time.toLocaleTimeString().split(":")[0];
           if (temp.substr(0, 1) === "0") {
@@ -867,7 +881,7 @@ export default {
           }
           obj[temp] += 1;
         });
-        this.maxTime = Object.keys(obj).sort(function(a, b) {
+        this.maxTime = Object.keys(obj).sort(function (a, b) {
           return obj[b] - obj[a];
         })[0];
 
@@ -889,7 +903,7 @@ export default {
         if (this.maxTime >= 16 && this.maxTime < 20) {
           this.maxMessage = " dribbbled in the evening 🌆";
         }
-        let timeLabels = Object.keys(this.timeData).map(el => {
+        let timeLabels = Object.keys(this.timeData).map((el) => {
           let h = parseInt(el);
           if (h >= 1 && h <= 11) {
             el = h + " AM";
@@ -911,43 +925,43 @@ export default {
                 data: Object.values(this.timeData),
                 backgroundColor: "rgba(0, 217, 132, 0.5)",
                 borderColor: "#00D98E",
-                borderWidth: 1
-              }
-            ]
+                borderWidth: 1,
+              },
+            ],
           },
           options: {
             responsive: true,
             legend: {
-              display: false
+              display: false,
             },
             scales: {
               xAxes: [
                 {
                   gridLines: {
                     display: false,
-                    color: "#00D98E"
+                    color: "#00D98E",
                   },
-                  barPercentage: 0.7
-                }
+                  barPercentage: 0.7,
+                },
               ],
               yAxes: [
                 {
                   gridLines: {
                     display: false,
-                    color: "#00D98E"
+                    color: "#00D98E",
                   },
                   ticks: {
                     beginAtZero: true,
-                    stepSize: 1
-                  }
-                }
-              ]
+                    stepSize: 1,
+                  },
+                },
+              ],
             },
             tooltips: {
               enabled: true,
               mode: "single",
               callbacks: {
-                label: function(tooltipItems, data) {
+                label: function (tooltipItems, data) {
                   return (
                     " " +
                     tooltipItems.yLabel +
@@ -955,20 +969,20 @@ export default {
                     tooltipItems.xLabel +
                     "."
                   );
-                }
-              }
-            }
-          }
+                },
+              },
+            },
+          },
         });
       });
     },
-    getName: function() {
+    getName: function () {
       return this.profile.name.split(" ")[0];
     },
-    getTeams: function() {
-      this.profile.teams.forEach(element => {
+    getTeams: function () {
+      this.profile.teams.forEach((element) => {
         let d = new Date(element.created_at);
-        if (d.getFullYear() === 2020) {
+        if (d.getFullYear() === getLastYear) {
           this.filteredTeams.push(element);
         }
       });
@@ -977,19 +991,19 @@ export default {
       length === 1 ? (string = "team") : (string = "teams");
       return length + " new " + string;
     },
-    getAnimations: function() {
+    getAnimations: function () {
       let animatedshots = [];
-      this.shots.forEach(shot => {
+      this.shots.forEach((shot) => {
         if (shot.animated === true) {
           animatedshots.push(shot);
         }
       });
       return animatedshots.length;
     },
-    getTags: function() {
+    getTags: function () {
       let obj = this.tags;
-      this.shots.forEach(shot => {
-        shot.tags.forEach(temp => {
+      this.shots.forEach((shot) => {
+        shot.tags.forEach((temp) => {
           if (temp in obj) {
             obj[temp] += 1;
           } else {
@@ -1001,26 +1015,26 @@ export default {
       for (var tag in obj) {
         sortable.push([tag, obj[tag]]);
       }
-      sortable.sort(function(a, b) {
+      sortable.sort(function (a, b) {
         return b[1] - a[1];
       });
       sortable = sortable.slice(0, 5);
       return Object.keys(this.objectify(sortable));
-    }
+    },
   },
   methods: {
-    objectify: function(array) {
-      return array.reduce(function(result, currentArray) {
+    objectify: function (array) {
+      return array.reduce(function (result, currentArray) {
         result[currentArray[0]] = currentArray[1];
         return result;
       }, {});
     },
 
-    auth: function() {
+    auth: function () {
       //open auth window
       window.location.href =
         "https://dribbble.com/oauth/authorize?" + "client_id=" + this.client_id;
-    }
-  }
+    },
+  },
 };
 </script>
