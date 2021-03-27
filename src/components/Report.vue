@@ -86,7 +86,7 @@
         </div>
         <div class="sec">
           <h1>
-            <span style="color:#83A5FF">{{maxMonth}}</span> saw a lot of pixels from you!
+            <span style="color:#83A5FF">{{maxMonth}}</span> saw the maximum pixels from you!
           </h1>
           <div class="monthChartContainer">
             <div class="legend-container">
@@ -137,7 +137,7 @@
         <div class="divider"></div>
         <div class="farewell">
           <div class="message">
-            <p>I can’t wait to see what you create in 2020.</p>
+            <p>I can’t wait to see what you create in 2021.</p>
             <p>Best wishes for the new year ✨</p>
           </div>
           <div class="footer">
