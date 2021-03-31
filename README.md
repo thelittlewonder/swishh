@@ -7,10 +7,10 @@ Built using [Vue.js](http://vuejs.org) and [Dribbble API](https://developer.drib
 
 ``` bash
 # install dependencies
-npm install
+yarn install
 
-# serve with hot reload at localhost:8080
-npm run dev
+# serve with hot reload locally
+yarn serve
 
 # build for production with minification
-npm run build
+yarn build
