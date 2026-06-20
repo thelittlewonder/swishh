@@ -4,16 +4,24 @@
       title="Swishhh - Annual Dribbble Report Card"
       description="Visualise your year of Dribbbling"
     />
-    <div class="logo">
-      <router-link to="/">
+    <div class="logo" @click="onLogoClick">
+      <router-link to="/" @click.native.prevent>
         <img src="../assets/swishhhllogo.svg" alt="Swishhh" />
       </router-link>
+      <span v-if="debugMode" class="debug-badge">debug</span>
     </div>
     <div class="header">
       <div class="content">
         <h1>Visualise your year of Dribbbling</h1>
         <h2>
-          {{ getLastYear }} Year in Review Report Card for your Dribbble Profile
+          <span
+            v-if="debugMode"
+            class="year-picker"
+            title="Click to change report year"
+            @click="cycleYear"
+          >{{ selectedYear }}</span>
+          <span v-else>{{ getLastYear }}</span>
+          Year in Review Report Card for your Dribbble Profile
         </h2>
         <button @click="auth">
           <img src="../assets/dribbble.svg" />Analyse My Dribbble Profile
@@ -27,24 +35,60 @@
 </template>
 
 <script>
+import {
+  cycleReportYear,
+  enableDebugMode,
+  getDefaultReportYear,
+  getSelectedReportYear,
+  isDebugModeEnabled,
+} from "../debug";
+import { startDribbbleAuth } from "../dribbbleAuth";
+
+const LOGO_CLICKS_TO_DEBUG = 5;
+const LOGO_CLICK_RESET_MS = 2000;
+
 export default {
   name: "Home",
   data() {
     return {
-      client_id:
-        "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73",
+      debugMode: isDebugModeEnabled(),
+      selectedYear: getSelectedReportYear(),
+      logoClicks: 0,
+      logoClickTimer: null,
     };
   },
   computed: {
     getLastYear: function () {
-      return new Date().getFullYear() - 1;
+      return getDefaultReportYear();
     },
   },
   methods: {
+    onLogoClick: function () {
+      if (this.debugMode) {
+        return;
+      }
+
+      this.logoClicks += 1;
+
+      if (this.logoClickTimer) {
+        clearTimeout(this.logoClickTimer);
+      }
+
+      this.logoClickTimer = setTimeout(() => {
+        this.logoClicks = 0;
+      }, LOGO_CLICK_RESET_MS);
+
+      if (this.logoClicks >= LOGO_CLICKS_TO_DEBUG) {
+        this.debugMode = true;
+        this.logoClicks = 0;
+        enableDebugMode();
+      }
+    },
+    cycleYear: function () {
+      this.selectedYear = cycleReportYear(this.selectedYear);
+    },
     auth: function () {
-      //open auth window
-      window.location.href =
-        "https://dribbble.com/oauth/authorize?" + "client_id=" + this.client_id;
+      startDribbbleAuth(this.debugMode ? this.selectedYear : this.getLastYear);
     },
   },
 };
@@ -79,6 +123,33 @@ export default {
   font-weight: normal;
 }
 .home {
+  .logo {
+    position: relative;
+    display: inline-block;
+    cursor: default;
+
+    .debug-badge {
+      position: absolute;
+      top: -0.25em;
+      right: -0.5em;
+      padding: 0.15em 0.45em;
+      border-radius: 999px;
+      background: #1c2445;
+      color: #ffffff;
+      font-family: "HKGrotesk-Regular";
+      font-size: 0.65em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+  }
+
+  .year-picker {
+    color: #f765b8;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
+
   .header {
     display: flex;
     h1 {

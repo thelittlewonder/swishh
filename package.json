@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "serve": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.13.1",
     "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
     "reset-css": "^5.0.1",
@@ -15,11 +15,11 @@
     "vue-router": "^3.2.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "node-sass": "^4.12.0",
-    "sass-loader": "^8.0.2",
+    "@vue/cli-plugin-babel": "^5.0.9",
+    "@vue/cli-plugin-router": "^5.0.9",
+    "@vue/cli-service": "^5.0.9",
+    "sass": "^1.94.0",
+    "sass-loader": "^12.6.0",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [

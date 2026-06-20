@@ -589,6 +589,16 @@
 import axios from "axios";
 import Chart from "chart.js";
 import loader from "./Loader.vue";
+import {
+  buildApiUrl,
+  getReportYear,
+} from "../config";
+import {
+  getDefaultReportYear,
+  getSelectedReportYear,
+  isDebugModeEnabled,
+} from "../debug";
+import { startDribbbleAuth } from "../dribbbleAuth";
 import "reset-css";
 Chart.defaults.global.defaultFontFamily = "HKGrotesk-Regular";
 export default {
@@ -597,9 +607,9 @@ export default {
   data() {
     return {
       exists: "working",
-      shots: {},
+      shots: [],
       profile: {},
-      projects: {},
+      projects: [],
       dayData: {
         Monday: 0,
         Tuesday: 0,
@@ -657,39 +667,39 @@ export default {
       tags: {},
       randomShots: [],
       shareUrl: "",
+      reportYear: getReportYear(),
       pageTitle:
-        window.location.href.split("/")[3] + " : Dribbble Year in Review",
+        this.$route.params.id + " : Dribbble Year in Review",
       pageDescription: "My Annual Dribbble Report Card",
-      client_id:
-        "a7175aac5cccae62b2f94952db17a8c8e74a69e2d05cd04dd796e44a0baedc73",
     };
   },
   mounted() {
-    //get username from the route
-    let user = this.$route.params.id;
     let vm = this;
     axios
-      .get(
-        "https://bounnce-api.herokuapp.com/data?user=" + this.$route.params.id
-      )
+      .get(buildApiUrl("/profiles/" + this.$route.params.id))
       .then(function (response) {
-        response.data.length === 1
-          ? (vm.exists = "true")
-          : (vm.exists = "false");
-        vm.profile = response.data[0].profile;
-        vm.shots = response.data[0].shots;
-        vm.projects = response.data[0].projects;
+        vm.exists = "true";
+        vm.profile = response.data.profile || {};
+        vm.shots = response.data.shots || [];
+        vm.projects = response.data.projects || [];
+        vm.reportYear = response.data.reportYear || getReportYear();
+      })
+      .catch(function () {
+        vm.exists = "false";
+        vm.profile = {};
+        vm.shots = [];
+        vm.projects = [];
       });
   },
   computed: {
     getQuery: function () {
-      return window.location.href.split("/")[3];
+      return this.$route.params.id;
     },
     getLastYear: function () {
-      return new Date().getFullYear() - 1;
+      return this.reportYear;
     },
     getCurrYear: function () {
-      return new Date().getFullYear();
+      return this.reportYear + 1;
     },
     getBtn: function () {
       let text =
@@ -1031,9 +1041,11 @@ export default {
     },
 
     auth: function () {
-      //open auth window
-      window.location.href =
-        "https://dribbble.com/oauth/authorize?" + "client_id=" + this.client_id;
+      const reportYear = isDebugModeEnabled()
+        ? getSelectedReportYear()
+        : getDefaultReportYear();
+
+      startDribbbleAuth(reportYear);
     },
   },
 };
