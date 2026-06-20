@@ -1,11 +1,25 @@
-import { dribbbleClientId, dribbbleRedirectUri } from "./config";
+import { dribbbleClientId, getDribbbleRedirectUri } from "./config";
 import { persistReportYearForAuth } from "./debug";
 
 function startDribbbleAuth(selectedYear) {
+  if (!dribbbleClientId) {
+    window.alert(
+      "Dribbble client ID is missing. Set VUE_APP_DRIBBBLE_CLIENT_ID in Netlify and redeploy."
+    );
+    return;
+  }
+
+  const redirectUri = getDribbbleRedirectUri();
+
+  if (!redirectUri) {
+    window.alert("Could not determine the OAuth redirect URL.");
+    return;
+  }
+
   const state = Math.random().toString(36).slice(2);
   const params = new URLSearchParams({
     client_id: dribbbleClientId,
-    redirect_uri: dribbbleRedirectUri,
+    redirect_uri: redirectUri,
     state: state,
   });
 

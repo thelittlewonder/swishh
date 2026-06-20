@@ -19,6 +19,16 @@ export default {
   },
   mounted: function() {
     const params = new URLSearchParams(window.location.search);
+    const oauthError = params.get("error");
+    const oauthErrorDescription = params.get("error_description");
+
+    if (oauthError) {
+      this.error =
+        oauthErrorDescription ||
+        "Dribbble authorization failed: " + oauthError;
+      return;
+    }
+
     const code = params.get("code");
     const state = params.get("state");
     const savedState = window.localStorage.getItem("swishhh_dribbble_state");
@@ -64,4 +74,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.auth {
+  max-width: 720px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  font-family: sans-serif;
+  color: #1c2445;
+  line-height: 1.5;
+}
 </style>

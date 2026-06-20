@@ -126,7 +126,6 @@ export default {
   .logo {
     position: relative;
     display: inline-block;
-    cursor: default;
 
     .debug-badge {
       position: absolute;
